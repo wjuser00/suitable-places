@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏠 Suitable Places - View Mode</title>
+<title>🏠 Apartment Showcase</title>
 <style>
 :root{--bg:#f5f5f0;--card:#fff;--text:#1a1a1a;--text2:#666;--border:#e8e8e3;--accent:#2d2d2d;--accent-light:#f0efe9;--tag:#e8e7e0;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.06);--shadow-lg:0 10px 40px rgba(0,0,0,.08)}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -35,7 +35,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue"
 .area-images .img-slot{aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:var(--accent-light);border:1px solid var(--border);cursor:pointer;transition:transform .2s,box-shadow .2s}
 .area-images .img-slot:hover{transform:scale(1.03);box-shadow:0 4px 16px rgba(0,0,0,0.12)}
 .area-images .img-slot img{width:100%;height:100%;object-fit:cover}
-.area-desc{width:100%;min-height:36px;border:none;padding:8px 0;font-size:13px;font-family:inherit;color:var(--text);background:transparent;line-height:1.5}
+.area-images .img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:12px;text-align:center;padding:8px}
+.area-info{background:var(--accent-light);border-radius:8px;padding:12px 16px;font-size:13px;line-height:1.8;color:var(--text)}
+.area-info span{display:block;padding:2px 0}
 .video-section{padding:20px 24px;border-bottom:1px solid var(--border)}
 .video-section h3{font-size:14px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:6px}
 .video-wrapper{position:relative;border-radius:8px;overflow:hidden;background:var(--accent-light);border:1px solid var(--border);min-height:120px;display:flex;align-items:center;justify-content:center}
@@ -55,8 +57,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue"
 </head>
 <body>
 <div class="header">
-<h1>🏠 Suitable Places</h1>
-<p>Shared view · Read only</p>
+<h1>🏠 Apartment Showcase</h1>
+<p>Click on a card to view details</p>
 </div>
 <div class="grid" id="grid"></div>
 <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
@@ -67,10 +69,177 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue"
 <div class="lightbox-counter" id="lightboxCounter"></div>
 </div>
 <script>
-var CARDS=[{"id": "_44jn1eo", "name": "No.1", "price": "", "location": "Nanjing", "roomType": "2-Bedroom, 1-Bathroom Suite with Living Room and Kitchen", "link": "", "notes": "80㎡ · Approximately 400m from the nearest metro station and relatively not close to the  railway station. Convenient transportation. There are several good restaurants nearby. There is a  large terrace with many flowers and plants . And have many tea sets, where you can brew tea. Smoking and cooking are  allowed.", "videoSrc": "media/new_v1.mp4", "videoType": "file", "_videoBlob": {}, "_videoBlobType": "video/mp4", "areas": {"卧室": {"images": ["media/new_img_000.jpeg", "media/new_img_001.jpeg", "media/new_img_002.jpeg"], "desc": "bedroom"}, "客厅": {"images": ["media/new_img_003.jpeg", "media/new_img_004.jpeg", "media/new_img_005.jpeg"], "desc": "living room"}, "厨房": {"images": ["media/new_img_006.jpeg"], "desc": "kitchen"}, "卫生间": {"images": ["media/new_img_007.jpeg"], "desc": "bathroom"}, "阳台": {"images": ["media/new_img_008.jpeg", "media/new_img_009.jpeg", "media/new_img_010.jpeg"], "desc": "balcony"}, "周边": {"images": ["media/new_img_011.jpeg", "media/new_img_012.jpeg", "media/new_img_013.jpeg", "media/new_img_014.jpeg", "media/new_img_015.jpeg"], "desc": "some nice pictures from other tenants"}}}, {"id": "_pvhh7hc", "name": "No.2", "price": "", "location": "Nanjing", "roomType": "2-Bedroom, 1-Bathroom Suite with Living Room and Kitchen", "link": "", "notes": "80㎡ · About 500m from the nearest metro station, not close to a railway station. Parks nearby. Smoking and cooking are allowed.", "videoSrc": "media/v2.mp4", "videoType": "file", "_videoBlob": {}, "_videoBlobType": "video/mp4", "areas": {"Bedroom": {"images": ["media/img_011.jpeg", "media/img_012.jpeg"], "desc": ""}, "Living Room": {"images": ["media/img_013.jpeg", "media/img_014.jpeg", "media/img_015.jpeg"], "desc": ""}, "Bathroom": {"images": ["media/img_016.jpeg"], "desc": ""}}}, {"id": "_3762k7b", "name": "No.3", "price": "", "location": "Nanjing", "roomType": "2-Bedroom, 1-Bathroom Suite with Living Room and Kitchen", "link": "", "notes": "93㎡ · The nearest metro station is about 1km away, and the railway station is relatively far. Smoking is not allowed. Cooking is allowed.", "videoSrc": "media/v3.mp4", "videoType": "file", "_videoBlob": {}, "_videoBlobType": "video/mp4", "areas": {"Bedroom": {"images": ["media/img_018.jpeg", "media/img_019.jpeg"], "desc": ""}, "Living Room": {"images": ["media/img_020.jpeg", "media/img_021.jpeg"], "desc": ""}, "Kitchen": {"images": ["media/img_022.jpeg"], "desc": ""}, "Bathroom": {"images": ["media/img_023.jpeg"], "desc": ""}}}, {"id": "_yb40fqm", "name": "No.4", "price": "", "location": "Nanjing", "roomType": "2-Bedroom, 1-Bathroom Suite with Living Room and Kitchen", "link": "", "notes": "139㎡ · About 200m from the nearest metro station, not close to a railway station. Scenic spots nearby. Smoking and cooking are not allowed.", "videoSrc": "media/v4.mp4", "videoType": "file", "_videoBlob": {}, "_videoBlobType": "video/mp4", "areas": {"Bedroom": {"images": ["media/img_025.jpeg", "media/img_026.jpeg"], "desc": ""}, "Living Room": {"images": ["media/img_027.jpeg", "media/img_028.jpeg"], "desc": ""}, "Bathroom": {"images": ["media/img_029.jpeg"], "desc": ""}, "Balcony": {"images": ["media/img_030.jpeg"], "desc": ""}}}]
-var LANG="en";
-var AREA_ICONS={"卧室":"🛏️","客厅":"🛋️","厨房":"🍳","卫生间":"🚿","阳台":"🌿","周边":"🏘️","交通":"🚗","Bedroom":"🛏️","Living Room":"🛋️","Kitchen":"🍳","Bathroom":"🚿","Balcony":"🌿","Surroundings":"🏘️","Transport":"🚗"};
-var EXPAND_LABEL="Details";
+/*
+============================================================
+📝 How to add your apartment data
+============================================================
+
+Add new apartment objects to the CARDS array below.
+Each apartment has this format:
+
+{
+  id: "unique-id",                    // Any unique string
+  name: "Apartment Name",             // e.g. "Sunny Studio in Manhattan"
+  price: "$2,500/mo",                 // Price (optional)
+  location: "New York",              // Location
+  roomType: "1 Bedroom 1 Bathroom",  // Room type
+  link: "",                           // External link (optional)
+  notes: "Description...",           // Text description
+  videoSrc: "",                       // Video URL (optional)
+  videoType: "file",                  // Video type: file or youtube
+  areas: {
+    "Bedroom": {                     // Area name (customizable)
+      images: [                      // Array of image paths
+        "images/bedroom1.jpg",       // Local image
+        "https://example.com/bedroom2.jpg"  // Online image
+      ],
+      desc: "Description"            // Area description (optional)
+    },
+    "Living Room": {
+      images: ["images/living1.jpg"],
+      desc: ""
+    },
+    // ... more areas
+  }
+}
+
+Supported area icons:
+🛏️ Bedroom        🛋️ Living Room      🍳 Kitchen
+🚿 Bathroom        🌿 Balcony          🏘️ Surroundings
+🚗 Transport       📌 Other
+
+============================================================
+*/
+
+var CARDS = [
+  {
+    id: "option1",
+    name: "Scenic Room with Shanghai Landmark Views",
+    price: "",
+    location: "Shanghai",
+    roomType: "1 Bedroom · 1 Living Room · 1 Bathroom · 1 Kitchen",
+    link: "",
+    notes: "64㎡ · High floor city view · Pet friendly · Airport pickup available",
+    videoSrc: "",
+    videoType: "file",
+    areas: {
+      "Living Room": { images: ["first/01.jpg", "first/02.jpg"], desc: "" },
+      "Bedroom":     { images: ["first/03.jpg", "first/04.jpg"], desc: "" },
+      "Kitchen":     { images: ["first/05.jpg"], desc: "" },
+      "Bathroom":    { images: ["first/06.jpg"], desc: "" },
+      "Balcony":     { images: ["first/07.jpg"], desc: "" },
+      "Transport":   { images: [], desc: "Metro Line 8 Zhongxing Road Station Exit 3 · 1.2km to Shanghai Railway Station · 17.8km to Hongqiao Airport" },
+      "Surroundings":{ images: [], desc: "1.8km to Nanjing Road Pedestrian Street · 3km to The Bund · 9.2km to Oriental Pearl Tower" }
+    }
+  },
+  {
+    id: "option2",
+    name: "Cozy Suite · 72sqm Near Metro Lines 4&10",
+    price: "",
+    location: "Shanghai",
+    roomType: "1 Bedroom · 1 Living Room · 1 Bathroom · 1 Kitchen",
+    link: "",
+    notes: "72㎡ · Smart lock · Pet friendly · Near Hongkou Park",
+    videoSrc: "",
+    videoType: "file",
+    areas: {
+      "Living Room": { images: ["second/1.jpg", "second/2.jpg"], desc: "" },
+      "Bedroom":     { images: ["second/3.jpg", "second/4.jpg"], desc: "" },
+      "Kitchen":     { images: ["second/5.jpg"], desc: "" },
+      "Bathroom":    { images: ["second/6.jpg"], desc: "" },
+      "Balcony":     { images: ["second/7.jpg"], desc: "" },
+      "Transport":   { images: [], desc: "Metro Line 4 & Line 10 nearby · 4.7km to Shanghai Railway Station · 17km to Hongqiao Airport" },
+      "Surroundings":{ images: [], desc: "4.5km to The Bund · 5.7km to Oriental Pearl Tower · 5.7km to Shanghai IFC Mall · 7.9km to New World City" }
+    }
+  },
+  {
+    id: "option3",
+    name: "Park View Elevator Room · Near Metro",
+    price: "",
+    location: "Shanghai",
+    roomType: "1 Bedroom · 1 Living Room · 1 Bathroom · 1 Kitchen",
+    link: "",
+    notes: "65㎡ · Renovated 2022 · Elevator · Easy parking · Near Huashan Hospital",
+    videoSrc: "",
+    videoType: "file",
+    areas: {
+      "Living Room": { images: ["third/1.jpg", "third/2.jpg", "third/3.jpg"], desc: "" },
+      "Bedroom":     { images: ["third/4.jpg"], desc: "" },
+      "Kitchen":     { images: ["third/5.jpg"], desc: "" },
+      "Bathroom":    { images: ["third/6.jpg"], desc: "" },
+      "Balcony":     { images: [], desc: "" },
+      "Transport":   { images: [], desc: "194m to Gucun Park Metro Station · 11.3km to Shanghai Railway Station · 28.1km to Hongqiao Airport" },
+      "Surroundings":{ images: [], desc: "10km to The Bund · 5km to Shanghai Bay1 International Art Center · Near Uniqlo Flagship Store" }
+    }
+  },
+  {
+    id: "option4",
+    name: "Private Cinema Suite · 3min to Metro",
+    price: "",
+    location: "Shanghai",
+    roomType: "1 Bedroom · 1 Living Room · 1 Bathroom · 1 Kitchen",
+    link: "",
+    notes: "90㎡ · 9th floor view · Contactless self check-in · Private cinema · Super large kitchen · Pet friendly",
+    videoSrc: "",
+    videoType: "file",
+    areas: {
+      "Living Room": { images: ["forth/04f45c1fd156bc8a6c7aac25d87762b9.jpg", "forth/6ef15b56d2bfc47152de09af3a32816d.jpg"], desc: "" },
+      "Bedroom":     { images: ["forth/8e36be2799cbb2c3551951ec514d4a6d.jpg", "forth/1b72001a057553db8eef03ac7b33e1cc.jpg"], desc: "" },
+      "Kitchen":     { images: ["forth/a1827044a13cab9e859ab7ea5ad10199.jpg"], desc: "" },
+      "Bathroom":    { images: ["forth/96a30ac3ca8e326da2366dbe88218b35.jpg"], desc: "" },
+      "Balcony":     { images: ["forth/6ca3c1da66bfa1528a6d4fb4403516b9.jpg"], desc: "" },
+      "Transport":   { images: [], desc: "196m to Ziteng Road Metro Station · 9km to Hongqiao Station · 3.8km to Hongqiao Airport" },
+      "Surroundings":{ images: [], desc: "2.4km to Shanghai Zoo · 8.5km to Wukang Road · 2.3km to Qibao Exhibition Center" }
+    }
+  },
+  {
+    id: "option5",
+    name: "Smart Home Suite · Next to Disney & Wanda Plaza",
+    price: "",
+    location: "Shanghai",
+    roomType: "1 Bedroom · 1 Living Room · 1 Bathroom · 1 Kitchen",
+    link: "",
+    notes: "68㎡ · Smart home · Projector · Smart toilet · Disney shuttle · Wanda Plaza downstairs",
+    videoSrc: "",
+    videoType: "file",
+    areas: {
+      "Living Room": { images: ["fifth/1.jpg"], desc: "" },
+      "Bedroom":     { images: ["fifth/2.jpg", "fifth/3.jpg"], desc: "" },
+      "Kitchen":     { images: ["fifth/4.jpg"], desc: "" },
+      "Bathroom":    { images: ["fifth/5.jpg"], desc: "" },
+      "Balcony":     { images: ["fifth/6.jpg"], desc: "" },
+      "Transport":   { images: [], desc: "213m to Zhoupu Metro Station · 18.5km to Shanghai Railway Station · 22.7km to Pudong Airport" },
+      "Surroundings":{ images: [], desc: "9.2km to Shanghai Disney Resort · Wanda Plaza downstairs · 5.2km to Disney Town" }
+    }
+  },
+  {
+    id: "option6",
+    name: "Park View Suite · 127m to Metro",
+    price: "",
+    location: "Shanghai",
+    roomType: "1 Bedroom · 1 Living Room · 1 Bathroom · 1 Kitchen",
+    link: "",
+    notes: "65㎡ · Renovated 2022 · South-facing · Smart toilet · Butler service · Easy parking",
+    videoSrc: "",
+    videoType: "file",
+    areas: {
+      "Living Room": { images: ["sixth/1.jpg", "sixth/2.jpg"], desc: "" },
+      "Bedroom":     { images: ["sixth/3.jpg"], desc: "" },
+      "Kitchen":     { images: ["sixth/4.jpg"], desc: "" },
+      "Bathroom":    { images: ["sixth/5.jpg"], desc: "" },
+      "Balcony":     { images: [], desc: "" },
+      "Transport":   { images: [], desc: "127m to Gucun Park Metro Station · 11.2km to Shanghai Railway Station · 28km to Hongqiao Airport" },
+      "Surroundings":{ images: [], desc: "9km to Uniqlo Flagship Store · 7km to Shanghai Bay1 International Art Center · 112m to Zhengda Happy City" }
+    }
+  }
+];
+
+// ============================================================
+// 以下代码无需修改
+// ============================================================
+
+var AREA_ICONS={"卧室":"🛏️","客厅":"🛋️","厨房":"🍳","卫生间":"🚿","阳台":"🌿","周边":"🏘️","交通":"🚗","主卧":"🛏️","次卧":"🛏️","Bedroom":"🛏️","Living Room":"🛋️","Kitchen":"🍳","Bathroom":"🚿","Balcony":"🌿","Surroundings":"🏘️","Transport":"🚗"};
+var EXPAND_LABEL="View Details";
 var VIDEO_LABEL="Video Tour";
 var VIEW_LINK_LABEL="View Link";
 var allImages=[];var currentLightboxIdx=0;
@@ -82,10 +251,8 @@ function showLightboxImage(){document.getElementById("lightboxImg").src=allImage
 function toggleDetail(btn){btn.classList.toggle("open");btn.nextElementSibling.classList.toggle("show")}
 document.addEventListener("keydown",function(e){if(!document.getElementById("lightbox").classList.contains("show"))return;if(e.key==="Escape")closeLightbox(e);if(e.key==="ArrowLeft")navLightbox(-1);if(e.key==="ArrowRight")navLightbox(1)});
 document.addEventListener("click",function(e){var slot=e.target.closest(".img-slot[data-idx]");if(slot){openLightbox(parseInt(slot.getAttribute("data-idx")))}});
-function render(){allImages=[];var grid=document.getElementById("grid");grid.innerHTML="";CARDS.forEach(function(card){var tags="";if(card.location)tags+="<span class=\"tag\">📍"+esc(card.location)+"</span>";if(card.roomType)tags+="<span class=\"tag\">🛏️"+esc(card.roomType)+"</span>";var areasHtml="";var areaKeys=Object.keys(card.areas);for(var ai=0;ai<areaKeys.length;ai++){var areaName=areaKeys[ai];var areaData=card.areas[areaName];var imgsHtml="";for(var ii=0;ii<areaData.images.length;ii++){var src=areaData.images[ii];if(src){allImages.push(src);imgsHtml+="<div class=\"img-slot\" data-idx=\""+(allImages.length-1)+"\"><img src=\""+src+"\" alt=\"\"></div>"}}areasHtml+="<div class=\"area-section\"><h3>"+(AREA_ICONS[areaName]||"📌")+" "+esc(areaName)+"</h3><div class=\"area-images\">"+imgsHtml+"</div>"+(areaData.desc?"<div class=\"area-desc\">"+esc(areaData.desc)+"</div>":"")+"</div>"}var vidHtml="";if(card.videoSrc){var isVid=card.videoType==="blob"||card.videoType==="file"||/\.mp4|\.webm|\.ogg/i.test(card.videoSrc)||card.videoSrc.indexOf("data:video")===0;if(isVid){vidHtml="<video controls src=\""+card.videoSrc+"\"></video>"}else{vidHtml="<iframe src=\""+card.videoSrc+"\" style=\"width:100%;aspect-ratio:16/9;border:none;\" allowfullscreen></iframe>"}vidHtml="<div class=\"video-section\"><h3>🎬 "+VIDEO_LABEL+"</h3><div class=\"video-wrapper\">"+vidHtml+"</div></div>"}var el=document.createElement("div");el.className="card";el.innerHTML="<div class=\"card-header\"><h2>"+esc(card.name)+"</h2>"+(card.price?"<div class=\"price\">"+esc(card.price)+"</div>":"")+"</div>"+(tags?"<div class=\"card-meta\">"+tags+"</div>":"")+(card.notes?"<div class=\"card-notes\">"+esc(card.notes)+"</div>":"")+(card.link?"<div class=\"card-link\"><a href=\""+esc(card.link)+"\" target=\"_blank\">🔗 "+VIEW_LINK_LABEL+"</a></div>":"")+"<button class=\"expand-btn\" onclick=\"toggleDetail(this)\"><span class=\"arrow\">▼</span> "+EXPAND_LABEL+"</button><div class=\"card-detail\">"+vidHtml+areasHtml+"</div>";grid.appendChild(el)})}
+function render(){allImages=[];var grid=document.getElementById("grid");grid.innerHTML="";CARDS.forEach(function(card){var tags="";if(card.location)tags+="<span class=\"tag\">📍"+esc(card.location)+"</span>";if(card.roomType)tags+="<span class=\"tag\">🛏️"+esc(card.roomType)+"</span>";var areasHtml="";var areaKeys=Object.keys(card.areas);for(var ai=0;ai<areaKeys.length;ai++){var areaName=areaKeys[ai];var areaData=card.areas[areaName];var imgsHtml="";for(var ii=0;ii<areaData.images.length;ii++){var src=areaData.images[ii];if(src){allImages.push(src);imgsHtml+="<div class=\"img-slot\" data-idx=\""+(allImages.length-1)+"\"><img src=\""+src+"\" alt=\"\"></div>"}}if(areaData.images.length===0&&areaData.desc){areasHtml+="<div class=\"area-section\"><h3>"+(AREA_ICONS[areaName]||"📌")+" "+esc(areaName)+"</h3><div class=\"area-info\"><span>"+esc(areaData.desc).replace(/·/g,"</span><span>")+"</span></div></div>"}else{areasHtml+="<div class=\"area-section\"><h3>"+(AREA_ICONS[areaName]||"📌")+" "+esc(areaName)+"</h3><div class=\"area-images\">"+imgsHtml+"</div>"+(areaData.desc?"<div class=\"area-desc\">"+esc(areaData.desc)+"</div>":"")+"</div>"}}var vidHtml="";if(card.videoSrc){var isVid=card.videoType==="blob"||card.videoType==="file"||/\.mp4|\.webm|\.ogg/i.test(card.videoSrc)||card.videoSrc.indexOf("data:video")===0;if(isVid){vidHtml="<video controls src=\""+card.videoSrc+"\"></video>"}else{vidHtml="<iframe src=\""+card.videoSrc+"\" style=\"width:100%;aspect-ratio:16/9;border:none;\" allowfullscreen></iframe>"}vidHtml="<div class=\"video-section\"><h3>🎬 "+VIDEO_LABEL+"</h3><div class=\"video-wrapper\">"+vidHtml+"</div></div>"}var el=document.createElement("div");el.className="card";el.innerHTML="<div class=\"card-header\"><h2>"+esc(card.name)+"</h2>"+(card.price?"<div class=\"price\">"+esc(card.price)+"</div>":"")+"</div>"+(tags?"<div class=\"card-meta\">"+tags+"</div>":"")+(card.notes?"<div class=\"card-notes\">"+esc(card.notes)+"</div>":"")+(card.link?"<div class=\"card-link\"><a href=\""+esc(card.link)+"\" target=\"_blank\">🔗 "+VIEW_LINK_LABEL+"</a></div>":"")+"<button class=\"expand-btn\" onclick=\"toggleDetail(this)\"><span class=\"arrow\">▼</span> "+EXPAND_LABEL+"</button><div class=\"card-detail\">"+vidHtml+areasHtml+"</div>";grid.appendChild(el)})}
 render();
-
 </script>
 </body>
 </html>
-<!-- refreshed -->
